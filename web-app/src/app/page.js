@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
-import UploadZone from '@/components/UploadZone';
 import Dashboard from '@/components/Dashboard';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { DEFAULT_CONFIG, runPipeline } from '@/utils/pipeline';
@@ -21,7 +20,6 @@ export default function Home() {
     setProcessing(true);
     setError(null);
 
-    // Yield to let React render the processing state before synchronous work
     setTimeout(() => {
       try {
         const out = [];
@@ -53,25 +51,21 @@ export default function Home() {
     results.forEach(res => {
       const baseName = res.name.replace('.xlsx', '').substring(0, 25);
 
-      // Track summary sheet
       if (res.trackSummary.length > 0) {
         const ws = XLSX.utils.json_to_sheet(res.trackSummary);
         XLSX.utils.book_append_sheet(wb, ws, `${baseName}_tracks`);
       }
 
-      // Point summary
       if (res.pointSummary && res.pointSummary.length > 0) {
         const ws = XLSX.utils.json_to_sheet(res.pointSummary);
         XLSX.utils.book_append_sheet(wb, ws, `${baseName}_pts`);
       }
 
-      // Interval summary
       if (res.intervalSummary && res.intervalSummary.length > 0) {
         const ws = XLSX.utils.json_to_sheet(res.intervalSummary);
         XLSX.utils.book_append_sheet(wb, ws, `${baseName}_iv`);
       }
 
-      // Direction summary
       if (res.directionSummary && res.directionSummary.length > 0) {
         const ws = XLSX.utils.json_to_sheet(res.directionSummary);
         XLSX.utils.book_append_sheet(wb, ws, `${baseName}_dir`);
@@ -83,12 +77,12 @@ export default function Home() {
 
   return (
     <div className="layout-container">
-      <Sidebar config={config} setConfig={setConfig} onRun={handleRun} processing={processing} />
+      <Sidebar config={config} setConfig={setConfig} files={files} setFiles={setFiles} onRun={handleRun} processing={processing} />
       <div className="main-content">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <div>
             <h1 style={{ fontSize: '1.875rem', fontWeight: 'bold' }}>Blob Kinetics Dashboard</h1>
-            <p style={{ color: 'var(--text-secondary)' }}>Upload your raw tracking data and configure parameters to compute dI/dt kinetics.</p>
+            <p style={{ color: 'var(--text-secondary)' }}>Configure parameters and run analysis to compute dI/dt kinetics.</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {results && (
@@ -99,8 +93,6 @@ export default function Home() {
             <ThemeToggle />
           </div>
         </div>
-
-        <UploadZone files={files} setFiles={setFiles} />
 
         {error && (
           <div className="glass-panel" style={{ padding: '16px', marginBottom: '24px', borderColor: 'var(--accent-red)' }}>
