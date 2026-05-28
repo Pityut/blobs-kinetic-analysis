@@ -1,0 +1,16 @@
+export const DEFAULT_CONFIG = {
+  frame_col: "frame_index_kept",
+  x_col: "x",
+  y_col: "y",
+  radius_col: "radius",
+  intensity_col: "mean_r",
+  frame_interval_min: 30,
+  min_consecutive_frames: 2,
+  min_nn_distance: 15.0,
+  overlap_margin: 0.0,
+  overlap_factor: 0.6,
+  use_overlap_for_isolation: false,
+  max_link_distance: 10.0,
+  max_radius_delta: null,
+  stable_eps: 0.05,
+};
