@@ -12,5 +12,5 @@ export const DEFAULT_CONFIG = {
   use_overlap_for_isolation: false,
   max_link_distance: 10.0,
   max_radius_delta: null,
-  stable_eps: 0.05,
+  stable_eps: 1e-6,
 };

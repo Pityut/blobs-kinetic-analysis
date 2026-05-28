@@ -8,7 +8,7 @@ const FIELDS = [
   { name: 'max_link_distance', label: 'Max Link Distance', min: 0, max: 50, step: 0.5 },
   { name: 'frame_interval_min', label: 'Frame Interval (min)', min: 1, max: 120, step: 1 },
   { name: 'min_consecutive_frames', label: 'Min Consecutive Frames', min: 1, max: 20, step: 1 },
-  { name: 'stable_eps', label: 'Stable Threshold (dI/dt)', min: 0, max: 1, step: 0.01 },
+  { name: 'stable_eps', label: 'Stable Threshold (dI/dt)', min: 0, max: 1, step: 0.001 },
 ];
 
 function ConfigField({ name, label, min, max, step, value, onChange }) {

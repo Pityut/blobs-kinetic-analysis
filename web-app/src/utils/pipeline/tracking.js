@@ -77,6 +77,13 @@ export function buildBlobTracks(df, config) {
     }
   }
 
+  // Assign standalone track IDs to isolated blobs that were never linked
+  for (const row of isoRows) {
+    if (!trackIdMap.has(row)) {
+      trackIdMap.set(row, nextTrackId++);
+    }
+  }
+
   return df.map(row => ({
     ...row,
     track_id: trackIdMap.get(row) ?? null,
